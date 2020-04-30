@@ -1,19 +1,30 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 
 	ctl "github.com/rachitt96/calculator_design/controller"
 	mdl "github.com/rachitt96/calculator_design/model"
+	view "github.com/rachitt96/calculator_design/view"
 )
 
 func main() {
 	calcModel := mdl.Calculator{}
 	calcModel.SetResult(0)
 
-	calcController := &ctl.CalculatorController{CalcModel: calcModel}
+	calcView := view.CalculatorView{}
 
-mainLoop:
+	calcController := &ctl.CalculatorController{CalcModel: calcModel, CalcView: calcView}
+
+	//calcController.updateCalcView()
+
+	//http.HandleFunc("/", calcController.UpdateCalcView)
+	http.HandleFunc("/submit", calcController.PerformOperation)
+	http.HandleFunc("/", calcController.ResetCalculator)
+
+	http.ListenAndServe(":9090", nil)
+
+	/*mainLoop:
 	for {
 
 		fmt.Println("Enter your choise")
@@ -44,6 +55,6 @@ mainLoop:
 		case "2":
 			break mainLoop
 		}
-	}
+	}*/
 
 }

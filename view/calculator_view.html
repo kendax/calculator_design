@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>demo calculator design</title>
+    </head>
+
+    <body>
+        <h2>Calculator</h2>
+        <form method = "POST" action="/submit">
+            <label>first operand</label>
+            <input type="text" name="operand1" value="{{ .FirstOperand }}">
+            
+            <br/>
+
+            <label>operator</label>
+            <input type="text" name="operator" value="{{ .Operator }}">
+            
+            <br/>
+
+            <label>second operand</label>
+            <input type="text" name="operand2" value="{{ .SecondOperand }}">
+            
+            <br/>
+
+            <input type="submit">
+            <button type = "button" onclick = "location.href = '/'">CustomReset</button>
+            
+            <br/>
+
+            <input type="text" name="result" value="{{ .Result }}">
+        </form>
+    </body>
+</html>
