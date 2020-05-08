@@ -6,18 +6,31 @@
     <body>
         <h2>Calculator</h2>
         <form method = "POST" action="/submit">
-            <label>first operand</label>
-            <input type="text" name="operand1" value="{{ .FirstOperand }}">
+            <label for = "operand1">first operand</label>
+            <input type="text" name="operand1" id = "operand1" value="{{ .FirstOperand }}">
             
             <br/>
 
-            <label>operator</label>
-            <input type="text" name="operator" value="{{ .Operator }}">
-            
+            <!--<p> Please select operator: </p>
+            {{range $op := .Operator}}
+                <input type = "radio" name = "operator" id = "{{ $op.Text }}" value = "{{ $op.Value }}" {{ if $op.IsChecked }} checked {{ end }}>
+                <label for = "{{ $op.Text }}"> {{ $op.Text }} </label>
+                <br/>
+            {{ end }}-->
+
+            <label for = "operator">Please select operator</label>
+
+            <select id = "operator" name = "operator">
+                <option selected hidden>Choose here</option>
+                {{ range $op := .Operator }}
+                    <option value = "{{ $op.Value }}" {{ if $op.IsChecked }} selected {{ end }}>{{ $op.Text }}</option>
+                {{ end }}
+            </select>
+
             <br/>
 
-            <label>second operand</label>
-            <input type="text" name="operand2" value="{{ .SecondOperand }}">
+            <label for = "operator2">second operand</label>
+            <input type="text" name="operand2" id = "operator2" value="{{ .SecondOperand }}">
             
             <br/>
 

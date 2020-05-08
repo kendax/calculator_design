@@ -23,10 +23,14 @@ type CalculatorController struct {
 
 func (self *CalculatorController) ResetCalculator(w http.ResponseWriter, r *http.Request) {
 	self.CalcModel.SetResult(0)
+
 	self.CalcView.FirstOperand = 0
 	self.CalcView.SecondOperand = 0
 	self.CalcView.Result = 0
-	self.CalcView.Operator = ""
+
+	for i := 0; i < len(self.CalcView.Operator); i++ {
+		self.CalcView.Operator[i].IsChecked = false
+	}
 
 	self.CalcView.ShowCalc(w, r)
 }
@@ -38,9 +42,10 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 	operator := ""
 
 	if r.Method == http.MethodPost {
+		r.ParseForm()
 		firstOperand = r.FormValue("operand1")
 		secondOperand = r.FormValue("operand2")
-		operator = r.FormValue("operator")
+		operator = r.Form.Get("operator")
 	}
 
 	firstNumber, _ := strconv.Atoi(firstOperand)
@@ -63,8 +68,15 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 
 	self.CalcView.FirstOperand = firstNumber
 	self.CalcView.SecondOperand = secondNumber
-	self.CalcView.Operator = operator
 	self.CalcView.Result = self.CalcModel.GetResult()
+
+	for i := 0; i < len(self.CalcView.Operator); i++ {
+		current_obj := &self.CalcView.Operator[i]
+
+		if current_obj.Value == operator {
+			current_obj.IsChecked = true
+		}
+	}
 
 	self.CalcView.ShowCalc(w, r)
 

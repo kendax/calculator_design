@@ -6,7 +6,7 @@ In this project, I am creating web-based calculator in Golang and using MVC arch
 
 ![class diagram](calculator_design_2.png "Title")
 
-The program is organized into mainly two packages:
+The program is organized in three packages:
 
 1. **Model**
     * Calculator:  

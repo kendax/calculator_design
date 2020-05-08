@@ -1,16 +1,23 @@
 package view
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 )
 
+type OperatorRadioButton struct {
+	Value     string
+	IsChecked bool
+	Text      string
+}
+
 type CalculatorView struct {
 	Result        int
 	FirstOperand  int
 	SecondOperand int
-	Operator      string
+	Operator      []OperatorRadioButton
 }
 
 /*func (self *CalculatorView) submitButton(w http.ResponseWriter, r *http.Request) *CalculatorView {
@@ -25,13 +32,14 @@ type CalculatorView struct {
 }*/
 
 func (self *CalculatorView) ShowCalc(w http.ResponseWriter, r *http.Request) {
-	//calcView := &CalculatorView{Result: 0}
 
 	t, err := template.ParseFiles("view/calculator_view.html")
 
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
+
+	fmt.Println(self)
 
 	err = t.Execute(w, self)
 

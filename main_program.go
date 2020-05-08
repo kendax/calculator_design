@@ -10,13 +10,15 @@ import (
 
 func main() {
 	calcModel := mdl.Calculator{}
-	calcModel.SetResult(0)
 
-	calcView := view.CalculatorView{}
+	operators := []view.OperatorRadioButton{
+		view.OperatorRadioButton{"+", false, "+"},
+		view.OperatorRadioButton{"-", false, "-"},
+	}
+
+	calcView := view.CalculatorView{Operator: operators}
 
 	calcController := &ctl.CalculatorController{CalcModel: calcModel, CalcView: calcView}
-
-	//calcController.updateCalcView()
 
 	//http.HandleFunc("/", calcController.UpdateCalcView)
 	http.HandleFunc("/submit", calcController.PerformOperation)
