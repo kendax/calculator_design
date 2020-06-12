@@ -1,6 +1,6 @@
 # calculator_design
 
-In this project, I am creating web-based calculator in Golang and using MVC architecture pattern for separating the logic of every module.
+In this project, I am creating web-based calculator application in Golang. During implementation, I have followed MVC (Model-View-Controller) architectural pattern for separating the logic of each module.
 
 ## Class Diagram
 
@@ -37,9 +37,9 @@ The program is organized in three packages:
 ## To-do list
 
 - [x] make view package for UI and building html template in it.
-- [ ] unit testing.
+- [x] unit testing.
 - [ ] create Exception functionality for handling bad user input.
-- [ ] Implementing Design Pattern once project get many functionalities to handle.
+- [ ] Implementing Design Pattern once this project gets many functionalities to handle.
 
 ## Running Application
 

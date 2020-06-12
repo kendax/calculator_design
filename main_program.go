@@ -14,6 +14,8 @@ func main() {
 	operators := []view.OperatorRadioButton{
 		view.OperatorRadioButton{"+", false, "+"},
 		view.OperatorRadioButton{"-", false, "-"},
+		view.OperatorRadioButton{"*", false, "*"},
+		view.OperatorRadioButton{"/", false, "/"},
 	}
 
 	calcView := view.CalculatorView{Operator: operators}

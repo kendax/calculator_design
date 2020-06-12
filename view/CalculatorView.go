@@ -1,7 +1,6 @@
 package view
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -14,10 +13,11 @@ type OperatorRadioButton struct {
 }
 
 type CalculatorView struct {
-	Result        int
-	FirstOperand  int
-	SecondOperand int
+	Result        float64
+	FirstOperand  float64
+	SecondOperand float64
 	Operator      []OperatorRadioButton
+	ShowValue     bool
 }
 
 /*func (self *CalculatorView) submitButton(w http.ResponseWriter, r *http.Request) *CalculatorView {
@@ -38,8 +38,6 @@ func (self *CalculatorView) ShowCalc(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
-
-	fmt.Println(self)
 
 	err = t.Execute(w, self)
 

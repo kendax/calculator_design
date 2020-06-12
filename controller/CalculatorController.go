@@ -32,6 +32,8 @@ func (self *CalculatorController) ResetCalculator(w http.ResponseWriter, r *http
 		self.CalcView.Operator[i].IsChecked = false
 	}
 
+	self.CalcView.ShowValue = false
+
 	self.CalcView.ShowCalc(w, r)
 }
 
@@ -48,11 +50,11 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 		operator = r.Form.Get("operator")
 	}
 
-	firstNumber, _ := strconv.Atoi(firstOperand)
-	secondNumber, _ := strconv.Atoi(secondOperand)
+	firstNumber, _ := strconv.ParseFloat(firstOperand, 64)
+	secondNumber, _ := strconv.ParseFloat(secondOperand, 64)
 
-	fmt.Println()
-	fmt.Println("Requested Operation:", firstNumber, operator, secondNumber)
+	/*fmt.Println()
+	fmt.Println("Requested Operation:", firstNumber, operator, secondNumber)*/
 
 	switch operator {
 	case "+":
@@ -60,6 +62,12 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 
 	case "-":
 		self.CalcModel.Subtract(firstNumber, secondNumber)
+
+	case "*":
+		self.CalcModel.Multiply(firstNumber, secondNumber)
+
+	case "/":
+		self.CalcModel.Divide(firstNumber, secondNumber)
 	}
 
 	finalAnswer := self.CalcModel.GetResult()
@@ -69,6 +77,7 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 	self.CalcView.FirstOperand = firstNumber
 	self.CalcView.SecondOperand = secondNumber
 	self.CalcView.Result = self.CalcModel.GetResult()
+	self.CalcView.ShowValue = true
 
 	for i := 0; i < len(self.CalcView.Operator); i++ {
 		current_obj := &self.CalcView.Operator[i]

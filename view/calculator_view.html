@@ -1,45 +1,132 @@
 <html>
     <head>
-        <title>demo calculator design</title>
+        <title>calculator design</title>
+
+        <style>
+
+            .field_wrapper {
+                display: grid;
+                grid-template-columns: 30% 70%;
+            }
+            
+            .text_wrapper > input{
+                width: 100%
+            }
+            
+            .select_wrapper > select{
+                width: 100%
+            }
+
+            .button_wrapper {
+                display: grid;
+                grid-template-columns: 90% auto;
+                column-gap: 2px;
+            }
+
+            .equal_button {
+                width:100%;
+                background-color: orange;
+            }
+
+            .reset_button {
+                width: 100%;
+                background-color: red;
+            }
+
+            .central_design {
+                display: grid;
+                grid-template-columns: 30% auto 30%;
+            }
+
+            .form_color {
+                background-color: #eee;
+            }
+
+            .header {
+                background-color: purple;
+                color: white;
+                padding: 10px;
+            }
+
+        </style>
     </head>
 
     <body>
-        <h2>Calculator</h2>
-        <form method = "POST" action="/submit">
-            <label for = "operand1">first operand</label>
-            <input type="text" name="operand1" id = "operand1" value="{{ .FirstOperand }}">
-            
-            <br/>
+        <header class = "header">
+            <h2>Calculator</h2>
+        </header>
 
-            <!--<p> Please select operator: </p>
-            {{range $op := .Operator}}
-                <input type = "radio" name = "operator" id = "{{ $op.Text }}" value = "{{ $op.Value }}" {{ if $op.IsChecked }} checked {{ end }}>
-                <label for = "{{ $op.Text }}"> {{ $op.Text }} </label>
-                <br/>
-            {{ end }}-->
+        <br/>
 
-            <label for = "operator">Please select operator</label>
+        <section class = "central_design">
+            <div></div>
 
-            <select id = "operator" name = "operator">
-                <option selected hidden>Choose here</option>
-                {{ range $op := .Operator }}
-                    <option value = "{{ $op.Value }}" {{ if $op.IsChecked }} selected {{ end }}>{{ $op.Text }}</option>
-                {{ end }}
-            </select>
+            <div class = "form_color">
+                <form method = "POST" action="/submit">
+                    <div class = "field_wrapper">
+                        <div>
+                            <label for = "operand1">first operand</label>
+                        </div>
+                        <div class = "text_wrapper">
+                            <input type="text" name="operand1" id = "operand1" {{ if .ShowValue }} value="{{ .FirstOperand }}" {{ else }} placeholder = "please enter first operand" {{ end }}>
+                        </div>
+                    </div>
+                    
+                    <br/>
 
-            <br/>
+                    <div class = "field_wrapper">
+                        <div>
+                            <label for = "operator">Please select operator</label>
+                        </div>
 
-            <label for = "operator2">second operand</label>
-            <input type="text" name="operand2" id = "operator2" value="{{ .SecondOperand }}">
-            
-            <br/>
+                        <div class = "select_wrapper">
+                            <select id = "operator" name = "operator">
+                                <option selected hidden>Choose here</option>
+                                {{ range $op := .Operator }}
+                                    <option value = "{{ $op.Value }}" {{ if $op.IsChecked }} selected {{ end }}>{{ $op.Text }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                    </div>
 
-            <input type="submit">
-            <button type = "button" onclick = "location.href = '/'">CustomReset</button>
-            
-            <br/>
+                    <br/>
 
-            <input type="text" name="result" value="{{ .Result }}">
-        </form>
+                    <div class = "field_wrapper">
+                        <div>
+                            <label for = "operator2">second operand</label>
+                        </div>
+                        <div class = "text_wrapper">
+                            <input type="text" name="operand2" id = "operator2" {{ if .ShowValue }} value="{{ .SecondOperand }}" {{ else }} placeholder = "please enter second operand" {{ end }}>
+                        </div>
+                    </div>
+                    
+                    <br/>
+
+                    <div class = "field_wrapper">
+                        <div></div>
+                        <div class = "button_wrapper">
+                            <div>
+                                <input type = "submit" value = "=" class = "equal_button">
+                            </div>
+                            <div>
+                                <button type = "button" class = "reset_button" onclick = "location.href = '/'"> C </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br/>
+
+                    <div class = "field_wrapper">
+                        <div></div>
+                        <div>
+                            <input type="text" name="result" {{ if .ShowValue }} value="{{ .Result }}" {{ end }}>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div></div>
+        </section>
+
     </body>
 </html>
