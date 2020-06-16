@@ -38,7 +38,7 @@ The program is organized in three packages:
 
 - [x] make view package for UI and building html template in it.
 - [x] unit testing.
-- [ ] create Exception functionality for handling bad user input.
+- [x] error handling for preventing bad user input.
 - [ ] Implementing Design Pattern once this project gets many functionalities to handle.
 
 ## Running Application

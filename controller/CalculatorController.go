@@ -37,6 +37,15 @@ func (self *CalculatorController) ResetCalculator(w http.ResponseWriter, r *http
 	self.CalcView.ShowCalc(w, r)
 }
 
+func contains(calcView view.CalculatorView, str string) bool {
+	for _, a := range calcView.Operator {
+		if a.Value == str {
+			return true
+		}
+	}
+	return false
+}
+
 func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *http.Request) {
 
 	firstOperand := ""
@@ -50,11 +59,35 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 		operator = r.Form.Get("operator")
 	}
 
-	firstNumber, _ := strconv.ParseFloat(firstOperand, 64)
-	secondNumber, _ := strconv.ParseFloat(secondOperand, 64)
+	firstNumber, operandOneErr := strconv.ParseFloat(firstOperand, 64)
+	secondNumber, operandTwoErr := strconv.ParseFloat(secondOperand, 64)
 
-	/*fmt.Println()
-	fmt.Println("Requested Operation:", firstNumber, operator, secondNumber)*/
+	fmt.Println(operandOneErr)
+
+	if operandOneErr != nil || operandTwoErr != nil || contains(self.CalcView, operator) == false {
+		if operandOneErr != nil {
+			fmt.Println("in here")
+			self.CalcView.ErrorMsg.FirstOperandError = "Enter Valid Number"
+		}
+
+		if operandTwoErr != nil {
+			self.CalcView.ErrorMsg.SecondOperandError = "Enter Valid Number"
+		}
+
+		if contains(self.CalcView, operator) == false {
+			self.CalcView.ErrorMsg.OperatorError = "Select an operator"
+		}
+
+		self.ResetCalculator(w, r)
+		return
+	} else {
+		self.CalcView.ErrorMsg.FirstOperandError = ""
+		self.CalcView.ErrorMsg.SecondOperandError = ""
+		self.CalcView.ErrorMsg.OperatorError = ""
+	}
+
+	fmt.Println()
+	fmt.Println("Requested Operation:", firstNumber, operator, secondNumber)
 
 	switch operator {
 	case "+":
@@ -68,6 +101,10 @@ func (self *CalculatorController) PerformOperation(w http.ResponseWriter, r *htt
 
 	case "/":
 		self.CalcModel.Divide(firstNumber, secondNumber)
+
+	default:
+		http.Error(w, "operator not available", 500)
+		return
 	}
 
 	finalAnswer := self.CalcModel.GetResult()
