@@ -44,7 +44,7 @@ The program is organized in three packages:
 
 ## Running Application
 
-![Screenshot](application_screenshot.png "Title")
+![Screenshot](application_screenshot.PNG "Title")
 
 First of all, you will need to clone this repository using following command:
 
