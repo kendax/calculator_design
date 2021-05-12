@@ -39,15 +39,54 @@ The program is organized in three packages:
 - [x] make view package for UI and building html template in it.
 - [x] unit testing.
 - [x] error handling for preventing bad user input.
+- [ ] Implementing the similar functionalities using REST API.
 - [ ] Implementing Design Pattern once this project gets many functionalities to handle.
 
 ## Running Application
 
-Use following command in order to run this application after cloning this repository:
+![Screenshot](application_screenshot.png "Title")
+
+First of all, you will need to clone this repository using following command:
+
 ```
-go run main_program.go
+git clone https://github.com/rachitt96/calculator_design.git
+cd calculator_design
 ```
-Type this URL in webbrowser.
+
+Now, there are two ways in order to run this application as explained below:
+
+1. **Installing Go manually**
+
+    In this method, we will need to ensure that Go is installed in the local machine. If it is not installed, then we will need to download and install specific [installer](https://golang.org/doc/install) based on machine's operating system.
+
+    Check if Go is installed by running following command:
+    ```
+    go version
+    ```
+
+    Use following command in order to run this application after installing Go:
+    ```
+    go run main_program.go
+    ```
+
+
+2. **Using Docker container (recommended)**
+
+    In this method, we don't need to worry about installing Go for a specific OS, but we need to ensure that Docker Desktop is installed.
+
+    Run the following command in order to build the linux container for our application:
+
+    ```
+    docker build -t go_web_calculator:latest .
+    ```
+
+    Run the following command to run our container and binding the port 9090, which is used by our application.
+
+    ```
+    docker run --rm -p 9090:9090 go_web_calculator:latest
+    ```
+
+Type this URL in web browser.
 ```
 localhost:9090
 ```
